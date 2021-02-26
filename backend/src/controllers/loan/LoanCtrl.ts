@@ -1,18 +1,27 @@
-import { BodyParams, Controller, Post, Req } from "@tsed/common";
+import { BodyParams, Controller, Get, Post, Req } from "@tsed/common";
 import { Authorize } from "@tsed/passport";
 import { Inject } from "@tsed/di";
 import { LoanRepository } from "../../repositories/LoanRepository";
 import { Loan } from "../../entities/Loan";
 import { AcceptRoles } from "../../decorators/AcceptRoles";
+import { Customer } from "../../entities/Customer";
 
 @Controller("/loan")
 export class LoanCtrl {
   @Inject()
   private repo: LoanRepository;
 
+  @Get("/")
+  @Authorize("jwt")
+  @AcceptRoles("Customer")
+  getAll(@Req() req: Req): Loan[] {
+    const loans = (req.user as Customer).loans;
+    return loans || [];
+  }
+
   @Post("/submit")
   @Authorize("jwt")
-  @AcceptRoles("client")
+  @AcceptRoles("Customer")
   submitLoan(
     @Req() req: Req,
     @BodyParams("term") term: number,

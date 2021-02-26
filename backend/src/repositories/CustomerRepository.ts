@@ -3,7 +3,7 @@ import { Customer } from "../entities/Customer";
 
 @EntityRepository(Customer)
 export class CustomerRepository extends Repository<Customer> {
-  findByID(id: string): Promise<Customer | undefined> {
-    return this.findOne(id);
+  findByEmail(email: string): Promise<Customer | undefined> {
+    return this.findOne({email});
   }
 }

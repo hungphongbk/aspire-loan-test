@@ -6,7 +6,8 @@ import { Loan } from "./Loan";
 export class Customer extends User {
   @OneToMany(
     () => Loan,
-    loan => loan.owner
+    loan => loan.owner,
+    { eager: true }
   )
   loans: Loan[];
 }

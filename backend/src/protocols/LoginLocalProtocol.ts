@@ -6,6 +6,8 @@ import { IStrategyOptions, Strategy } from "passport-local";
 import { User } from "../entities/User";
 import { UserRepository } from "../repositories/UserRepository";
 import { Unauthorized } from "@tsed/exceptions";
+import { CustomerRepository } from "../repositories/CustomerRepository";
+import { Customer } from "../entities/Customer";
 
 @Protocol<IStrategyOptions>({
   name: "login",
@@ -22,11 +24,18 @@ export class LoginLocalProtocol implements OnVerify {
   @Inject()
   private userRepository: UserRepository;
 
+  @Inject()
+  private customerRepository: CustomerRepository;
+
   async $onVerify(
     @BodyParams() @Groups("credentials") credentials: User
   ): Promise<boolean | string> {
     const { email, password } = credentials;
-    const user = await this.userRepository.findOne({ email });
+    let user:
+      | User
+      | Customer
+      | undefined = await this.customerRepository.findByEmail(email);
+    if (!user) user = await this.userRepository.findOne({ email });
 
     if (!user) {
       // return false;
