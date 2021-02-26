@@ -1,7 +1,7 @@
 import { PlatformTest } from "@tsed/common";
 import { rootDir, Server } from "../../src/Server";
 
-export function bootstrapServer(options: any) {
+export function bootstrapServer(options: any): any {
   return PlatformTest.bootstrap(Server, {
     ...options,
 

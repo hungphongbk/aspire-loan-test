@@ -1,7 +1,7 @@
 export default {
   name: "default",
   type: "postgres",
-  host: process.env.POSTGRES_HOST || "localhost",
+  host: process.env.POSTGRES_HOST || "postgres",
   port: 5432,
   username: process.env.POSTGRES_USER || "test",
   password: process.env.POSTGRES_PASSWORD || "test",

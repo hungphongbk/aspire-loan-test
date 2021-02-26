@@ -1,10 +1,11 @@
-import {BodyParams, Constant, Inject} from "@tsed/common";
-import {OnVerify, Protocol} from "@tsed/passport";
-import {Groups} from "@tsed/schema";
+import { BodyParams, Constant, Inject } from "@tsed/common";
+import { OnVerify, Protocol } from "@tsed/passport";
+import { Groups } from "@tsed/schema";
 import * as jwt from "jsonwebtoken";
-import {IStrategyOptions, Strategy} from "passport-local";
-import {User} from "../entities/User";
-import {UserRepository} from "../repositories/UserRepository";
+import { IStrategyOptions, Strategy } from "passport-local";
+import { User } from "../entities/User";
+import { UserRepository } from "../repositories/UserRepository";
+import { Unauthorized } from "@tsed/exceptions";
 
 @Protocol<IStrategyOptions>({
   name: "login",
@@ -21,25 +22,26 @@ export class LoginLocalProtocol implements OnVerify {
   @Inject()
   private userRepository: UserRepository;
 
-  async $onVerify(@BodyParams() @Groups("credentials") credentials: User): Promise<boolean | string> {
-    const {email, password} = credentials;
-    const user = await this.userRepository.findOne({email});
+  async $onVerify(
+    @BodyParams() @Groups("credentials") credentials: User
+  ): Promise<boolean | string> {
+    const { email, password } = credentials;
+    const user = await this.userRepository.findOne({ email });
 
     if (!user) {
-      return false;
-      // OR throw new NotAuthorized("Wrong credentials")
+      // return false;
+      throw new Unauthorized("Wrong credentials");
     }
 
     if (!user.verifyPassword(password)) {
-      return false;
-      // OR throw new NotAuthorized("Wrong credentials")
+      throw new Unauthorized("Wrong credentials");
     }
 
     return this.createJwt(user);
   }
 
   createJwt(user: User): string {
-    const {issuer, audience, secretOrKey, maxAge = 3600} = this.jwtSettings;
+    const { issuer, audience, secretOrKey, maxAge = 3600 } = this.jwtSettings;
     const now = Date.now();
 
     return jwt.sign(
