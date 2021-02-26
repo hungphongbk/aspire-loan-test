@@ -4,6 +4,7 @@ import {
   Format,
   Groups,
   Minimum,
+  Property,
   Required
 } from "@tsed/schema";
 import {
@@ -18,6 +19,9 @@ import {
   column: { type: "varchar", name: "type", default: "admin" }
 })
 export class User {
+  @Column()
+  type: "admin" | "client";
+
   @Description("Database assigned id")
   @PrimaryGeneratedColumn()
   @Groups("!creation", "details")
@@ -27,6 +31,7 @@ export class User {
   @Example("user@domain.com")
   @Format("email")
   @Column({ unique: true })
+  @Property()
   email: string;
 
   @Groups("credentials")
@@ -34,6 +39,7 @@ export class User {
   @Example("/5gftuD/")
   @Column()
   @Required()
+  @Property()
   password: string;
 
   @Description("User first name")

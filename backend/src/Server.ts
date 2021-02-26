@@ -1,6 +1,6 @@
-import {Env} from "@tsed/core";
-import {Configuration, Inject, InjectorService} from "@tsed/di";
-import {$log, PlatformApplication} from "@tsed/common";
+import { Env } from "@tsed/core";
+import { Configuration, Inject, InjectorService } from "@tsed/di";
+import { $log, PlatformApplication } from "@tsed/common";
 import "@tsed/platform-express"; // /!\ keep this import hihi
 import bodyParser from "body-parser";
 import compress from "compression";
@@ -10,10 +10,9 @@ import cors from "cors";
 import "@tsed/ajv";
 import "@tsed/typeorm";
 import typeormConfig from "./config/typeorm";
-import {User} from "./entities/User";
-import {UserRepository} from "./repositories/UserRepository";
-import {deserialize} from "@tsed/json-mapper";
-
+import { User } from "./entities/User";
+import { UserRepository } from "./repositories/UserRepository";
+import { deserialize } from "@tsed/json-mapper";
 
 export const rootDir = __dirname;
 export const isProduction = process.env.NODE_ENV === Env.PROD;
@@ -45,18 +44,14 @@ if (isProduction) {
     disableRoutesSummary: isProduction
   },
   mount: {
-    "/rest": [
-      `${rootDir}/controllers/**/*.ts`
-    ]
+    "/rest": [`${rootDir}/controllers/**/*.ts`]
   },
   typeorm: typeormConfig,
-  exclude: [
-    "**/*.spec.ts"
-  ],
+  exclude: ["**/*.spec.ts"],
   passport: {
     userInfoModel: User
   },
-  componentsScan: [`${rootDir}/protocols/**/*.ts`],
+  componentsScan: [`${rootDir}/protocols/**/*.ts`]
 })
 export class Server {
   @Inject()
@@ -75,9 +70,11 @@ export class Server {
       .use(compress({}))
       .use(methodOverride())
       .use(bodyParser.json())
-      .use(bodyParser.urlencoded({
-        extended: true
-      }));
+      .use(
+        bodyParser.urlencoded({
+          extended: true
+        })
+      );
   }
 
   async $onReady(): Promise<void> {
@@ -85,18 +82,25 @@ export class Server {
     const count = await repository.count();
 
     if (!count) {
-      const user = deserialize(
-        {
-          email: process.env.ROOT_EMAIL || "admin@aspire.test",
-          password: process.env.ROOT_PWD || "admin",
-          firstName: "admin",
-          lastName: "admin",
-          age: 18
-        },
-        {type: User}
-      );
+                  // const user = deserialize(
+                  //   {
+                  //     email: process.env.ROOT_EMAIL || "admin@aspire.test",
+                  //     password: process.env.ROOT_PWD || "admin",
+                  //     firstName: "admin",
+                  //     lastName: "admin",
+                  //     age: 18,
+                  //     type: "admin"
+                  //   },
+                  //   { type: User }
+                  // );
 
-      await repository.save(user);
-    }
+                  await repository.save({
+                    email: process.env.ROOT_EMAIL || "admin@aspire.test",
+                    password: process.env.ROOT_PWD || "admin",
+                    firstName: "admin",
+                    lastName: "admin",
+                    age: 18
+                  });
+                }
   }
 }

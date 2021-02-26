@@ -1,10 +1,17 @@
-import { BodyParams, Controller, Post, Req } from "@tsed/common";
-import { Authenticate } from "@tsed/passport";
+import { BodyParams, Controller, Get, Post, Req } from "@tsed/common";
+import { Authenticate, Authorize } from "@tsed/passport";
 import { User } from "../../entities/User";
 import { Groups } from "@tsed/schema";
+import { AcceptRoles } from "../../decorators/AcceptRoles";
+import { Customer } from "../../entities/Customer";
+import { Inject } from "@tsed/di";
+import { CustomerRepository } from "../../repositories/CustomerRepository";
 
 @Controller("/auth")
 export class PassportCtrl {
+  @Inject()
+  customerRepo: CustomerRepository;
+
   @Post("/login")
   @Authenticate("login", { failWithError: false })
   login(
@@ -16,5 +23,19 @@ export class PassportCtrl {
       bearer_format: "Bearer",
       access_token: jwt
     };
+  }
+
+  @Post("/create-customer")
+  @Authorize("jwt")
+  @AcceptRoles("User")
+  createCustomer(@Req() req: Req): Promise<Customer> {
+    return this.customerRepo.save(req.body);
+  }
+
+  @Get("/test-customer")
+  @Authorize("jwt")
+  @AcceptRoles("Customer")
+  testCustomer(): string {
+    return "hello";
   }
 }

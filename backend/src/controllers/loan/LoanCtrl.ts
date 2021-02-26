@@ -3,6 +3,7 @@ import { Authorize } from "@tsed/passport";
 import { Inject } from "@tsed/di";
 import { LoanRepository } from "../../repositories/LoanRepository";
 import { Loan } from "../../entities/Loan";
+import { AcceptRoles } from "../../decorators/AcceptRoles";
 
 @Controller("/loan")
 export class LoanCtrl {
@@ -11,6 +12,7 @@ export class LoanCtrl {
 
   @Post("/submit")
   @Authorize("jwt")
+  @AcceptRoles("client")
   submitLoan(
     @Req() req: Req,
     @BodyParams("term") term: number,
