@@ -41,7 +41,7 @@ export class LoginLocalProtocol implements OnVerify {
   }
 
   createJwt(user: User): string {
-    const { issuer, audience, secretOrKey, maxAge = 3600 } = this.jwtSettings;
+    const { issuer, audience, secretOrKey, maxAge = 86400 } = this.jwtSettings;
     const now = Date.now();
 
     return jwt.sign(

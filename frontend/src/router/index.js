@@ -6,7 +6,7 @@ import routes from "./routes";
 Vue.use(VueRouter);
 
 const authGuard = store => (to, from, next) => {
-  const { authData } = store.getters;
+  const authData = store.getters["user/authData"];
   // next-line: check if route ("to" object) needs authenticated
   if (
     to.matched.some(record => record.meta.requiresAuth) &&
@@ -29,7 +29,6 @@ const authGuard = store => (to, from, next) => {
 };
 
 export default function({ store }) {
-  console.log(store);
   const Router = new VueRouter({
     scrollBehavior: () => ({ x: 0, y: 0 }),
     routes,

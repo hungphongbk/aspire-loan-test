@@ -1,10 +1,8 @@
 <template>
-  <q-page
-    class="bg-light-green window-height window-width row justify-center items-center"
-  >
+  <q-page class="bg-light-green row justify-center items-center">
     <div class="column">
       <div class="row">
-        <h5 class="text-h5 text-white q-my-md">Company & Co</h5>
+        <h5 class="text-h5 text-white q-my-md">Aspire</h5>
       </div>
       <div class="row">
         <q-card square bordered class="q-pa-lg shadow-1">
@@ -35,6 +33,7 @@
               size="lg"
               class="full-width"
               label="Login"
+              @click="handleSubmit"
             />
           </q-card-actions>
           <q-card-section class="text-center q-pa-none">
@@ -53,6 +52,16 @@ export default {
       email: "",
       password: ""
     };
+  },
+  methods: {
+    async handleSubmit(e) {
+      e.preventDefault();
+      await this.$store.dispatch("user/login", {
+        email: this.email,
+        password: this.password
+      });
+      this.$router.push("/");
+    }
   }
 };
 </script>

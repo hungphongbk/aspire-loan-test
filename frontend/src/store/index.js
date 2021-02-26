@@ -4,6 +4,7 @@ import VuexPersistence from "vuex-persist";
 
 // import example from './module-example'
 import user from "./user";
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -21,6 +22,23 @@ const vuexLocal = new VuexPersistence({
   modules: ["user"]
 });
 
+function interceptWithAxios(store) {
+  const instance = axios.create({
+    baseURL: "http://localhost:8081/rest/"
+  });
+  instance.interceptors.request.use(config => {
+    const token = store.getters["user/authData"]?.token;
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  });
+
+  Vue.axios = Vue.prototype.$axios = instance;
+}
+
 export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
@@ -32,6 +50,7 @@ export default function(/* { ssrContext } */) {
     strict: process.env.DEBUGGING,
     plugins: [vuexLocal.plugin]
   });
+  interceptWithAxios(Store);
 
   return Store;
 }
