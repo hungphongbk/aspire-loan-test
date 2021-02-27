@@ -4,6 +4,8 @@ import {
   Format,
   Groups,
   Minimum,
+  Nullable,
+  number,
   Property,
   Required
 } from "@tsed/schema";
@@ -20,6 +22,7 @@ import {
 })
 export class User {
   @Column()
+  @Property()
   type: string;
 
   @Description("Database assigned id")

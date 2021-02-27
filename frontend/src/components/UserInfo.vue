@@ -13,9 +13,6 @@ export default {
     user() {
       return this.$store.state.user.me;
     }
-  },
-  beforeMount() {
-    this.$store.dispatch("user/me");
   }
 };
 </script>

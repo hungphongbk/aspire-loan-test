@@ -49,8 +49,8 @@ export default {
   name: "Signin",
   data() {
     return {
-      email: "",
-      password: ""
+      email: "admin@aspire.test",
+      password: "admin"
     };
   },
   methods: {
@@ -60,7 +60,8 @@ export default {
         email: this.email,
         password: this.password
       });
-      this.$router.push("/");
+      const isAdmin = this.$store.getters["user/isAdmin"];
+      await this.$router.push(isAdmin ? "/admin" : "/");
     }
   }
 };

@@ -20,26 +20,6 @@
 import UserInfo from "components/UserInfo";
 export default {
   name: "MainLayout",
-  components: { UserInfo },
-  computed: {
-    isAdmin() {
-      return this.$store.getters["user/isAdmin"];
-    }
-  },
-  // watch: {
-  //   isAdmin(newVal) {
-  //     if (newVal === true && !/^\/admin/.test(this.$router.currentRoute.path)) {
-  //       this.$router.push("/admin");
-  //     }
-  //   }
-  // },
-  mounted() {
-    if (
-      this.isAdmin === true &&
-      !/^\/admin/.test(this.$router.currentRoute.path)
-    ) {
-      this.$router.push("/admin");
-    }
-  }
+  components: { UserInfo }
 };
 </script>
