@@ -66,12 +66,33 @@ export default {
         lastName: "",
         age: ""
       },
-      list: [],
-      columns: [{ name: "ID" }, { name: "Name" }, { name: "E-mail" }]
+      columns: [
+        { label: "ID", name: "id", field: "id" },
+        {
+          name: "name",
+          label: "Name",
+          format: (_, row) => row.firstName + " " + row.lastName
+        },
+        { label: "E-mail", name: "email", field: "email" }
+      ]
     };
   },
+  computed: {
+    list() {
+      return this.$store.state.admin.customerList;
+    }
+  },
   methods: {
-    onSubmit() {}
+    async onSubmit() {
+      try {
+        await this.$store.dispatch("admin/addCustomer", this.addNewModel);
+      } finally {
+        this.addNew = false;
+      }
+    }
+  },
+  beforeMount() {
+    this.$store.dispatch("admin/getCustomerList");
   }
 };
 </script>

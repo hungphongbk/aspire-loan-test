@@ -4,6 +4,7 @@ import VuexPersistence from "vuex-persist";
 
 // import example from './module-example'
 import user from "./user";
+import admin from "./admin";
 import axios from "axios";
 
 Vue.use(Vuex);
@@ -41,7 +42,8 @@ function interceptWithAxios(store) {
 export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      user
+      user,
+      admin
     },
 
     // enable strict mode (adds overhead!)

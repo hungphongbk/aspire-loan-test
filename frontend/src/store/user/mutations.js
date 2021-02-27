@@ -8,3 +8,7 @@ export function login(state, { auth }) {
 export function me(state, { data }) {
   state.me = data;
 }
+export function logout(state) {
+  state.auth = {};
+  state.me = {};
+}
