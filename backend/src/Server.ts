@@ -12,7 +12,6 @@ import "@tsed/typeorm";
 import typeormConfig from "./config/typeorm";
 import { User } from "./entities/User";
 import { UserRepository } from "./repositories/UserRepository";
-import { deserialize } from "@tsed/json-mapper";
 
 export const rootDir = __dirname;
 export const isProduction = process.env.NODE_ENV === Env.PROD;
@@ -82,25 +81,25 @@ export class Server {
     const count = await repository.count();
 
     if (!count) {
-                  // const user = deserialize(
-                  //   {
-                  //     email: process.env.ROOT_EMAIL || "admin@aspire.test",
-                  //     password: process.env.ROOT_PWD || "admin",
-                  //     firstName: "admin",
-                  //     lastName: "admin",
-                  //     age: 18,
-                  //     type: "admin"
-                  //   },
-                  //   { type: User }
-                  // );
+      // const user = deserialize(
+      //   {
+      //     email: process.env.ROOT_EMAIL || "admin@aspire.test",
+      //     password: process.env.ROOT_PWD || "admin",
+      //     firstName: "admin",
+      //     lastName: "admin",
+      //     age: 18,
+      //     type: "admin"
+      //   },
+      //   { type: User }
+      // );
 
-                  await repository.save({
-                    email: process.env.ROOT_EMAIL || "admin@aspire.test",
-                    password: process.env.ROOT_PWD || "admin",
-                    firstName: "admin",
-                    lastName: "admin",
-                    age: 18
-                  });
-                }
+      await repository.save({
+        email: process.env.ROOT_EMAIL || "admin@aspire.test",
+        password: process.env.ROOT_PWD || "admin",
+        firstName: "admin",
+        lastName: "admin",
+        age: 18
+      });
+    }
   }
 }

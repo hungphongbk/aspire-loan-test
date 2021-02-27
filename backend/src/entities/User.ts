@@ -16,11 +16,11 @@ import {
 
 @Entity()
 @TableInheritance({
-  column: { type: "varchar", name: "type", default: "admin" }
+  column: { type: "varchar", name: "type" }
 })
 export class User {
   @Column()
-  type: "admin" | "client";
+  type: string;
 
   @Description("Database assigned id")
   @PrimaryGeneratedColumn()

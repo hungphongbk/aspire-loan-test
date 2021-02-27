@@ -27,12 +27,6 @@ describe("LoanController", () => {
   afterAll(PlatformTest.reset);
 
   describe("POST /loan/submit", () => {
-    const adminLoginInfo = {
-      headers: {
-        Authorization: ""
-      },
-      body: formurlencoded({ email: "admin@aspire.test", password: "admin" })
-    };
     let adminJwt = "";
     let clientJwt = "";
 

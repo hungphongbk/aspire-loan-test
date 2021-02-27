@@ -42,6 +42,7 @@ describe("PassportController", () => {
   });
   describe("POST /auth/create-customer", () => {
     let adminJwt = "";
+    let clientJwt = "";
     beforeAll(async () => {
       adminJwt = await testLogin(request, "admin@aspire.test", "admin");
     });
@@ -53,8 +54,8 @@ describe("PassportController", () => {
           formurlencoded({
             email: "client@aspire.test",
             password: "client",
-            firstName: "john",
-            lastName: "doe",
+            firstName: "John",
+            lastName: "Doe Customer",
             age: 18
           })
         )
@@ -68,13 +69,20 @@ describe("PassportController", () => {
         )
         .expect(200);
       expect(response.body).toHaveProperty("access_token");
-      const clientJwt = response.body.access_token;
+      clientJwt = response.body.access_token;
 
       response = await request
         .get("/auth/test-customer")
         .set("Authorization", `Bearer ${clientJwt}`)
         .expect(200);
       expect(response.text).toEqual("hello");
+    });
+    it("GET /auth/me successfully", async () => {
+      const response = await request
+        .get("/auth/me")
+        .set("Authorization", `Bearer ${clientJwt}`)
+        .expect(200);
+      expect(response.body.lastName).toEqual("Doe Customer");
     });
   });
 });

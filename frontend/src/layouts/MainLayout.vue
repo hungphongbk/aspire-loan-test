@@ -5,7 +5,9 @@
         <q-toolbar-title>
           Quasar App
         </q-toolbar-title>
-        <div>Quasar v{{ $q.version }}</div>
+        <div>
+          <user-info />
+        </div>
       </q-toolbar>
     </q-header>
     <q-page-container>
@@ -15,7 +17,9 @@
 </template>
 
 <script>
+import UserInfo from "components/UserInfo";
 export default {
-  name: "MainLayout"
+  name: "MainLayout",
+  components: { UserInfo }
 };
 </script>

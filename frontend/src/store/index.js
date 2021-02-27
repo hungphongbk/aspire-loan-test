@@ -27,8 +27,7 @@ function interceptWithAxios(store) {
     baseURL: "http://localhost:8081/rest/"
   });
   instance.interceptors.request.use(config => {
-    const token = store.getters["user/authData"]?.token;
-
+    const token = store.getters["user/authData"]?.access_token;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
