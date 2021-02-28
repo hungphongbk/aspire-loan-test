@@ -1,5 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn
+} from "typeorm";
 import { Customer } from "./Customer";
+import { Payment } from "./Payment";
 
 @Entity()
 export class Loan {
@@ -20,4 +27,11 @@ export class Loan {
     customer => customer.loans
   )
   owner: Customer;
+
+  @OneToMany(
+    () => Payment,
+    payment => payment.loan,
+    { eager: true }
+  )
+  paymentHistory: Payment[];
 }

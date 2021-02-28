@@ -5,6 +5,8 @@ import VuexPersistence from "vuex-persist";
 // import example from './module-example'
 import user from "./user";
 import admin from "./admin";
+import loan from "./loan";
+
 import axios from "axios";
 
 Vue.use(Vuex);
@@ -43,7 +45,8 @@ export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       user,
-      admin
+      admin,
+      loan
     },
 
     // enable strict mode (adds overhead!)

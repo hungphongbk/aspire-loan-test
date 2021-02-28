@@ -5,11 +5,15 @@ import { LoanRepository } from "../../repositories/LoanRepository";
 import { Loan } from "../../entities/Loan";
 import { AcceptRoles } from "../../decorators/AcceptRoles";
 import { Customer } from "../../entities/Customer";
+import { PaymentRepository } from "../../repositories/PaymentRepository";
 
 @Controller("/loan")
 export class LoanCtrl {
   @Inject()
   private repo: LoanRepository;
+
+  @Inject()
+  private paymentRepo: PaymentRepository;
 
   @Get("/")
   @Authorize("jwt")

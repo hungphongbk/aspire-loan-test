@@ -4,11 +4,6 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
-        path: "",
-        component: () => import("pages/Index.vue"),
-        meta: { requiresAuth: "client" }
-      },
-      {
         path: "/admin",
         component: () => import("pages/admin/Index.vue"),
         meta: { requiresAuth: "admin" },
@@ -20,7 +15,16 @@ const routes = [
           }
         ]
       },
-      { path: "/signin", component: () => import("pages/Signin.vue") }
+      { path: "/signin", component: () => import("pages/Signin.vue") },
+      {
+        path: "",
+        component: () => import("pages/Index.vue"),
+        meta: { requiresAuth: "client" },
+        children: [
+          { path: "", redirect: "loans" },
+          { path: "loans", component: () => import("pages/LoanManagement.vue") }
+        ]
+      }
     ]
   },
 
