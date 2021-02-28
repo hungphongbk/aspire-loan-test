@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4>Loan Management</h4>
+    <h4>My Loans</h4>
     <div v-if="list.length === 0" class="text-center">
       <p>
         You don't have any registered loan.
@@ -54,7 +54,8 @@ export default {
     getItemIconAndColor: memoize(item => {
       return {
         pending: ["blue-grey-6", "pending"],
-        success: ["positive", "done"]
+        approved: ["positive", "done"],
+        rejected: ["positive", "error_outline"]
       }[item.status];
     })
   },

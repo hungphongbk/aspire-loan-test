@@ -13,7 +13,7 @@ const routes = [
             path: "customers",
             component: () => import("pages/admin/CustomerList.vue")
           },
-          { path: "loans", component: () => import("pages/admin/Loans.vue") }
+          { path: "loans", component: () => import("pages/admin/LoansManagement.vue") }
         ]
       },
       { path: "/signin", component: () => import("pages/Signin.vue") },
@@ -23,7 +23,7 @@ const routes = [
         meta: { requiresAuth: "client" },
         children: [
           { path: "", redirect: "loans" },
-          { path: "loans", component: () => import("pages/LoanManagement.vue") }
+          { path: "loans", component: () => import("pages/MyLoans.vue") }
         ]
       }
     ]

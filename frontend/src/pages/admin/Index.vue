@@ -1,8 +1,13 @@
 <template>
   <div :class="$style.AdminPage">
-    <q-drawer :value="true" show-if-above :width="200" :breakpoint="500">
+    <q-drawer
+      :value="true"
+      show-if-above
+      :width="200"
+      :breakpoint="500"
+    >
       <q-scroll-area class="fit">
-        <q-list padding>
+        <q-list padding class="q-pr-md">
           <q-item clickable>
             <router-link to="/admin/customers">Customers</router-link>
           </q-item>
@@ -12,7 +17,7 @@
         </q-list>
       </q-scroll-area>
     </q-drawer>
-    <q-page-container>
+    <q-page-container class="q-px-md">
       <router-view></router-view>
     </q-page-container>
   </div>

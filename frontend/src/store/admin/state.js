@@ -1,5 +1,6 @@
 export default function() {
   return {
-    customerList: []
+    customerList: [],
+    loans: []
   };
 }

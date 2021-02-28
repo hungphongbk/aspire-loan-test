@@ -7,3 +7,11 @@ export async function addCustomer({ commit, dispatch }, form) {
   await Vue.axios.post("/admin/customers", form);
   await dispatch("getCustomerList");
 }
+export async function getLoans({ commit }) {
+  const { data } = await Vue.axios.get("/admin/loans");
+  commit("getLoans", { data });
+}
+export async function approveLoan({ dispatch }, loan) {
+  await Vue.axios.put(`/admin/loan/${loan.id}/approve`);
+  await dispatch("getLoans");
+}

@@ -1,5 +1,5 @@
 <template>
-  <q-page-container>
+  <q-page-container class="q-pa-md">
     <router-view></router-view>
   </q-page-container>
 </template>
