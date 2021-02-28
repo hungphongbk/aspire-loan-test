@@ -34,7 +34,7 @@ export class LoginLocalProtocol implements OnVerify {
     let user:
       | User
       | Customer
-      | undefined = await this.customerRepository.findByEmail(email);
+      | undefined = await this.customerRepository.findOne({ email });
     if (!user) user = await this.userRepository.findOne({ email });
 
     if (!user) {

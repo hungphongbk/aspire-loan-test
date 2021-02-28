@@ -5,7 +5,6 @@
   "scripts": {
     "build": "yarn tsc",
     "tsc": "tsc --project tsconfig.compile.json",
-    "tsc:w": "tsc --project tsconfig.json -w",
     "start": "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
     "start:prod": "cross-env NODE_ENV=production node dist/index.js",
     "test": "yarn test:lint && yarn test:coverage",
@@ -57,7 +56,6 @@
     "@types/jest": "^26.0.20",
     "@types/lodash": "^4.14.168",
     "@types/method-override": "^0.0.31",
-    "@types/mocha": "^8.2.1",
     "@types/multer": "^1.4.5",
     "@types/node": "^14.14.31",
     "@types/passport": "^1.0.6",
@@ -76,7 +74,6 @@
     "eslint-plugin-prettier": "^3.3.1",
     "form-urlencoded": "^4.2.1",
     "jest": "^26.6.3",
-    "mocha": "^8.3.0",
     "nodemon": "^2.0.7",
     "nyc": "^15.1.0",
     "sinon": "^9.2.4",

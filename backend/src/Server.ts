@@ -1,6 +1,6 @@
 import { Env } from "@tsed/core";
 import { Configuration, Inject, InjectorService } from "@tsed/di";
-import { $log, PlatformApplication } from "@tsed/common";
+import { $log, PlatformApplication, Res } from "@tsed/common";
 import "@tsed/platform-express"; // /!\ keep this import hihi
 import bodyParser from "body-parser";
 import compress from "compression";
@@ -12,6 +12,7 @@ import "@tsed/typeorm";
 import typeormConfig from "./config/typeorm";
 import { User } from "./entities/User";
 import { UserRepository } from "./repositories/UserRepository";
+import path from "path";
 
 export const rootDir = __dirname;
 export const isProduction = process.env.NODE_ENV === Env.PROD;
@@ -50,7 +51,18 @@ if (isProduction) {
   passport: {
     userInfoModel: User
   },
-  componentsScan: [`${rootDir}/protocols/**/*.ts`]
+  componentsScan: [
+    `${rootDir}/repositories/**/*.ts`,
+    `${rootDir}/protocols/**/*.ts`
+  ],
+  statics: {
+    "/": [
+      {
+        root: path.join(rootDir, "../../frontend/build"),
+        maxAge: "1d"
+      }
+    ]
+  }
 })
 export class Server {
   @Inject()
@@ -74,6 +86,13 @@ export class Server {
           extended: true
         })
       );
+  }
+
+  $afterRoutesInit() {
+    if (process.env.NODE_ENV === "production")
+      this.app.get(`/*`, (req: any, res: Res) => {
+        res.sendFile(path.join(rootDir, "../../frontend/build", "index.html"));
+      });
   }
 
   async $onReady(): Promise<void> {
