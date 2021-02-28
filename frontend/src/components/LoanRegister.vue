@@ -5,7 +5,7 @@
         <div class="text-h6">Register new loan</div>
       </q-card-section>
       <q-card-section>
-        <q-form class="q-gutter-md">
+        <q-form class="q-gutter-md" @submit="submit">
           <q-list dense>
             <q-item
               >Term (number of weeks):&nbsp;<strong>{{
@@ -59,6 +59,12 @@ export default {
         amount: 1000000
       }
     };
+  },
+  methods: {
+    async submit() {
+      await this.$store.dispatch("loan/submit", this.data);
+      this.$emit("input", false);
+    }
   }
 };
 </script>
