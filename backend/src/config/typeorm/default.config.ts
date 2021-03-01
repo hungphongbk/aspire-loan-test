@@ -1,3 +1,8 @@
+import { User } from "../../entities/User";
+import { Customer } from "../../entities/Customer";
+import { Loan } from "../../entities/Loan";
+import { Payment } from "../../entities/Payment";
+console.log(process.env.POSTGRES_HOST);
 export default {
   name: "default",
   type: "postgres",
@@ -8,7 +13,5 @@ export default {
   database: process.env.POSTGRES_DB || "test",
   synchronize: true,
   logging: process.env.POSTGRES_LOGIN === "true",
-  entities: ["${rootDir}/entities/**/*.ts"],
-  migrations: ["${rootDir}/migration/**/*.ts"],
-  subscribers: ["${rootDir}/subscriber/**/*.ts"]
+  entities: [User, Customer, Loan, Payment]
 };

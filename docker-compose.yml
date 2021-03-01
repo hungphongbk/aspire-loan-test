@@ -3,14 +3,10 @@ services:
   postgres:
     image: postgres:11
     ports:
-      - 5432
+      - "5432:5432"
     environment:
       POSTGRES_USER: test
       POSTGRES_PASSWORD: test
-      POSTGRES_DB: test
-      PGDATA: /data/postgres
-    volumes:
-      - postgres:/data/postgres
   pgadmin:
     image: dpage/pgadmin4
     environment:
@@ -22,19 +18,16 @@ services:
     depends_on:
       - postgres
   web:
-    container_name: aspire
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-      args:
-        - http_proxy
-        - https_proxy
-        - no_proxy
+    build: .
+    environment:
+      NODE_ENV: production
+      PORT: 8081
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
     ports:
       - "8081:8081"
     depends_on:
       - postgres
     stdin_open: true # -i
     tty: true # -t
-volumes:
-  postgres:

@@ -1,26 +1,7 @@
 version: "3.5"
 services:
-  server:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-      args:
-        - http_proxy
-        - https_proxy
-        - no_proxy
-    image: backend/server:latest
-    ports:
-      - "8081:8081"
-    stdin_open: true
-    tty: true
-    volumes:
-      - ./:/usr/app
-      - /usr/app/node_modules
-    restart: always
-    depends_on:
-      - postgres
   postgres:
-    image: postgres:9.6.1
+    image: postgres:11
     ports:
       - 5432
     environment:
@@ -29,12 +10,23 @@ services:
       POSTGRES_DB: test
   pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin_container
     environment:
       PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "5050:80"
     restart: unless-stopped
+    depends_on:
+      - postgres
+  server:
+    build: .
+    ports:
+      - "8081:8081"
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/usr/app
+      - /usr/app/node_modules
+    restart: always
     depends_on:
       - postgres
