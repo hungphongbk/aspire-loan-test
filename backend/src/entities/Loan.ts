@@ -34,4 +34,7 @@ export class Loan {
     { eager: true }
   )
   paymentHistory: Payment[];
+
+  @Column({ type: "date", nullable: true })
+  nextPayment?: Date;
 }

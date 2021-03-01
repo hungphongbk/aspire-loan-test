@@ -36,9 +36,11 @@ export class AdminCtrl {
   }
 
   @Put("/loan/:id/approve")
-  async approveLoan(@PathParams("id") id: any): Promise<any> {
-    const loan = await this.loanRepo.findOneOrFail(id);
-    loan.status = "approved";
-    await this.loanRepo.save(loan);
+  approveLoan(@PathParams("id") id: any): Promise<Loan> {
+    return this.loanRepo.approveLoan(id);
+  }
+  @Put("/loan/:id/reject")
+  rejectLoan(@PathParams("id") id: any): Promise<Loan> {
+    return this.loanRepo.rejectLoan(id);
   }
 }

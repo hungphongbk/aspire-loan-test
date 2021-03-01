@@ -1,6 +1,6 @@
 <template>
   <q-dialog :value="open" @input="value => $emit('input', value)">
-    <q-card style="min-width: 350px;">
+    <q-card style="min-width: 450px;">
       <q-card-section>
         <div class="text-h6">Register new loan</div>
       </q-card-section>
