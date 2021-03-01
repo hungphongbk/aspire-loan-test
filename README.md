@@ -87,6 +87,4 @@ Test flow:
 
 2. Challenge 2
 
-```
-Route: /debit-card
-```
+_Sorry, I haven't had enough time yet to complete this challenge. I've spent almost time to review my **Vue.js** knowledge & find out what's new in **Quasar.js**, so I decide to implement FE in Quasar.js_
