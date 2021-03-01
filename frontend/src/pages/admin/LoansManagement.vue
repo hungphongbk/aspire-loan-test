@@ -32,7 +32,7 @@
               "
               round
               dense
-              @click="props.expand = !props.expand"
+              @click="() => rejectLoan(props.row)"
               icon="error_outline"
               :disable="props.row.status !== 'pending'"
             />
@@ -80,6 +80,9 @@ export default {
   methods: {
     approveLoan(loan) {
       return this.$store.dispatch("admin/approveLoan", loan);
+    },
+    rejectLoan(loan) {
+      return this.$store.dispatch("admin/rejectLoan", loan);
     }
   },
   beforeMount() {

@@ -11,7 +11,7 @@ export default {
 </script>
 <style module lang="scss">
 .Page {
-  composes: q-pa-md from global;
+  composes: q-pa-lg from global;
   h4 {
     margin-top: 0.75em;
     margin-bottom: 0.75em;

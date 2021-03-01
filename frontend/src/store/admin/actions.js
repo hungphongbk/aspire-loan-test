@@ -15,3 +15,8 @@ export async function approveLoan({ dispatch }, loan) {
   await Vue.axios.put(`/admin/loan/${loan.id}/approve`);
   await dispatch("getLoans");
 }
+
+export async function rejectLoan({ dispatch }, loan) {
+  await Vue.axios.put(`/admin/loan/${loan.id}/reject`);
+  await dispatch("getLoans");
+}

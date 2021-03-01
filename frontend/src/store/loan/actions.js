@@ -8,3 +8,7 @@ export async function submit({ dispatch }, form) {
   await Vue.axios.post("/loan/submit", form);
   await dispatch("get");
 }
+export async function makePayment({ dispatch }, { id }) {
+  await Vue.axios.post(`/loan/${id}/pay`);
+  await dispatch("get");
+}

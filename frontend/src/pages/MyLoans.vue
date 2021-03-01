@@ -65,6 +65,10 @@
                   push
                   size="md"
                   icon="attach_money"
+                  @click="
+                    paymentLoanId = item.id;
+                    doPaymentDialog = true;
+                  "
                 />
               </div>
             </template>
@@ -73,18 +77,22 @@
       </div>
     </div>
     <loan-register v-model="dialog" />
+    <loan-do-payment v-model="doPaymentDialog" :loan-id="paymentLoanId" />
   </div>
 </template>
 <script>
 import LoanRegister from "components/LoanRegister";
 import { memoize } from "lodash";
+import LoanDoPayment from "components/LoanDoPayment";
 
 export default {
   name: "LoanManagement",
-  components: { LoanRegister },
+  components: { LoanRegister, LoanDoPayment },
   data() {
     return {
-      dialog: false
+      dialog: false,
+      doPaymentDialog: false,
+      paymentLoanId: null
     };
   },
   computed: {
@@ -97,7 +105,7 @@ export default {
       return {
         pending: ["blue-grey-6", "pending"],
         approved: ["positive", "done"],
-        rejected: ["positive", "error_outline"]
+        rejected: ["negative", "error_outline"]
       }[item.status];
     })
   },
